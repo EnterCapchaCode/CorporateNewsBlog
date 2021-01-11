@@ -6,10 +6,9 @@
 package com.turbal.cnb.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -24,8 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "role")
-@Getter
-@Setter
+@Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,7 +43,7 @@ public class Role extends AuditableEntity<Integer> {
     public String toString() {
         return "Role{" +
             "id=" + id + "\n" +
-            "role name=" + role_name + "\n" +
+            ", role name=" + role_name + "\n" +
             "}";
     }
 }

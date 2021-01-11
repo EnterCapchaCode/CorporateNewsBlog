@@ -6,10 +6,9 @@
 package com.turbal.cnb.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -27,8 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "comment")
-@Getter
-@Setter
+@Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -56,9 +54,9 @@ public class Comment extends AuditableEntity<Integer> {
     public String toString() {
         return "Comment{" +
             "id=" + id + "\n" +
-            "comment_text=" + commentText + "\n" +
-            "employee=" + employee.getId() + "\n" +
-            "post=" + post.getId() + "\n" +
+            ", comment_text=" + commentText + "\n" +
+            ", employee=" + employee.getId() + "\n" +
+            ", post=" + post.getId() + "\n" +
             "}";
     }
 }

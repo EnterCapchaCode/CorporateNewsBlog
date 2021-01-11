@@ -6,10 +6,9 @@
 package com.turbal.cnb.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -28,8 +27,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "post")
-@Getter
-@Setter
+@Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -71,14 +69,14 @@ public class Post extends AuditableEntity<Integer> {
     public String toString() {
         return "Post{" +
             "id=" + id + "\n" +
-            "title=" + title + "\n" +
-            "description=" + description + "\n" +
-            "text=" + text + "\n" +
-            "creation date=" + creationDate + "\n" +
-            "modification date=" + modificationDate + "\n" +
-            "positive rating=" + positiveRating + "\n" +
-            "negative rating=" + negativeRating + "\n" +
-            "employee=" + employee.getId() + "\n" +
+            ", title=" + title + "\n" +
+            ", description=" + description + "\n" +
+            ", text=" + text + "\n" +
+            ", creation date=" + creationDate + "\n" +
+            ", modification date=" + modificationDate + "\n" +
+            ", positive rating=" + positiveRating + "\n" +
+            ", negative rating=" + negativeRating + "\n" +
+            ", employee=" + employee.getId() + "\n" +
             "}";
     }
 }

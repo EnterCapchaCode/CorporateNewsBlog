@@ -6,10 +6,9 @@
 package com.turbal.cnb.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
@@ -23,8 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "post_tag")
-@Getter
-@Setter
+@Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,7 +41,7 @@ public class PostTag extends AuditableEntity<Integer> {
     public String toString() {
         return "PostTag{" +
             "post=" + post.getId() + "\n" +
-            "tag=" + tag.getTag_name() + "\n" +
+            ", tag=" + tag.getTag_name() + "\n" +
             "}";
     }
 }

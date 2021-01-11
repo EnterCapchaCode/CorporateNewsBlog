@@ -5,6 +5,7 @@
 
 package com.turbal.cnb.entity;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,7 @@ import java.time.LocalDateTime;
 /**
  * Abstract class which allows to monitor the versioning and modification of entity.
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @SuperBuilder
 @MappedSuperclass
