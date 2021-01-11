@@ -40,4 +40,13 @@ public class Tag extends AuditableEntity<Integer> {
 
     @Column(name = "name", length = 20)
     private String tag_name;
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+            "id=" + id + "\n" +
+            "tag name=" + tag_name + "\n" +
+            "}";
+
+    }
 }

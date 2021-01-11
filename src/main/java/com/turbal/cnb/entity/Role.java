@@ -30,7 +30,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Role extends AuditableEntity<Integer>{
+public class Role extends AuditableEntity<Integer> {
 
     @Id
     @Column(name = "id")
@@ -40,4 +40,12 @@ public class Role extends AuditableEntity<Integer>{
 
     @Column(name = "role_name", length = 20)
     private String role_name;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+            "id=" + id + "\n" +
+            "role name=" + role_name + "\n" +
+            "}";
+    }
 }

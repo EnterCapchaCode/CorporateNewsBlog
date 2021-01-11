@@ -51,4 +51,14 @@ public class Comment extends AuditableEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+            "id=" + id + "\n" +
+            "comment_text=" + commentText + "\n" +
+            "employee=" + employee.getId() + "\n" +
+            "post=" + post.getId() + "\n" +
+            "}";
+    }
 }

@@ -56,4 +56,16 @@ public class Employee extends AuditableEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+            "id=" + id + "\n" +
+            "name=" + name + "\n" +
+            "surname=" + surname + "\n" +
+            "login=" + login + "\n" +
+            "password=" + password + "\n" +
+            "role=" + role.getId() + "\n" +
+            "}";
+    }
 }

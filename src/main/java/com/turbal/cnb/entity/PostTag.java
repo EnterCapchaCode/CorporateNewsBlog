@@ -38,4 +38,12 @@ public class PostTag extends AuditableEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
+
+    @Override
+    public String toString() {
+        return "PostTag{" +
+            "post=" + post.getId() + "\n" +
+            "tag=" + tag.getTag_name() + "\n" +
+            "}";
+    }
 }

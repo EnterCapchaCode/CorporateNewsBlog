@@ -34,7 +34,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Post extends AuditableEntity<Integer>{
+public class Post extends AuditableEntity<Integer> {
 
     @Id
     @Column(name = "id")
@@ -66,4 +66,19 @@ public class Post extends AuditableEntity<Integer>{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+            "id=" + id + "\n" +
+            "title=" + title + "\n" +
+            "description=" + description + "\n" +
+            "text=" + text + "\n" +
+            "creation date=" + creationDate + "\n" +
+            "modification date=" + modificationDate + "\n" +
+            "positive rating=" + positiveRating + "\n" +
+            "negative rating=" + negativeRating + "\n" +
+            "employee=" + employee.getId() + "\n" +
+            "}";
+    }
 }

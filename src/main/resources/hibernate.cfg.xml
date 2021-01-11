@@ -10,5 +10,12 @@
         <property name="hibernate.connection.password">postgres</property>
         <property name="hibernate.connection.username">postgres_user</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
+
+        <mapping class="com.turbal.cnb.entity.Employee"/>
+        <mapping class="com.turbal.cnb.entity.Post"/>
+        <mapping class="com.turbal.cnb.entity.Comment"/>
+        <mapping class="com.turbal.cnb.entity.PostTag"/>
+        <mapping class="com.turbal.cnb.entity.Role"/>
+        <mapping class="com.turbal.cnb.entity.Tag"/>
     </session-factory>
 </hibernate-configuration>
