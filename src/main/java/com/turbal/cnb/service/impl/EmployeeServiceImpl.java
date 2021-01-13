@@ -10,6 +10,7 @@ import com.turbal.cnb.exception.ValidationException;
 import com.turbal.cnb.mapper.EmployeeMapper;
 import com.turbal.cnb.repository.EmployeeRepo;
 import com.turbal.cnb.service.EmployeeService;
+import com.turbal.cnb.utils.EmployeeValidation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
     private final EmployeeMapper employeeMapper;
+    private final EmployeeValidation employeeValidation;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) throws ValidationException {
-        validateEmployeeDto(employeeDto);
+        employeeValidation.validate(employeeDto);
         var employee = employeeMapper.toEntity(employeeDto);
         employeeRepo.save(employee);
 
-        log.info("Employee with ID = {} saved", employeeDto.getId());
+        log.info("Employee with login = {} saved", employeeDto.getLogin());
         return employeeDto;
     }
 
@@ -47,13 +49,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto findByLogin(String login) {
         var employee = employeeRepo.findByLogin(login);
         if (employee != null) {
+            log.info("Employee with login = {} found", login);
             return employeeMapper.toDto(employee);
         }
+        log.info("Employee with login = {} not found", login);
         return null;
     }
 
     @Override
     public List<EmployeeDto> findAll() {
+        log.info("Got a list of all employees");
         return employeeRepo.findAll()
             .stream()
             .map(employeeMapper::toDto)
