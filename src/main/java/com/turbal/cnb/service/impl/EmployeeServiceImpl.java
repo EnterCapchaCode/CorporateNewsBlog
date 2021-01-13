@@ -14,11 +14,9 @@ import com.turbal.cnb.utils.EmployeeValidation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
 
 import java.util.List;
-
-import static java.util.Objects.isNull;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -52,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             log.info("Employee with login = {} found", login);
             return employeeMapper.toDto(employee);
         }
-        log.info("Employee with login = {} not found", login);
+        log.info("Employee not found");
         return null;
     }
 
@@ -64,15 +62,4 @@ public class EmployeeServiceImpl implements EmployeeService {
             .map(employeeMapper::toDto)
             .collect(Collectors.toList());
     }
-
-    private void validateEmployeeDto(EmployeeDto employeeDto) throws ValidationException {
-        if (isNull(employeeDto)) {
-            throw new ValidationException("Object user is null");
-        }
-        if (isNull(employeeDto.getLogin()) || employeeDto.getLogin().isEmpty()) {
-            throw new ValidationException("Login is empty");
-        }
-        log.info("Employee with ID = {} passed validation", employeeDto.getId());
-    }
-
 }

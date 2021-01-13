@@ -7,9 +7,7 @@
 package com.turbal.cnb.mapper;
 
 import com.turbal.cnb.dto.EmployeeDto;
-import com.turbal.cnb.dto.RoleDto;
 import com.turbal.cnb.entity.Employee;
-import com.turbal.cnb.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;

@@ -3,7 +3,6 @@
  * https://github.com/EnterCapchaCode
  */
 
-
 package com.turbal.cnb.dto;
 
 import lombok.Data;

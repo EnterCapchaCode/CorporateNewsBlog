@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ import javax.persistence.Table;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Employee extends AuditableEntity<Integer> {
 
@@ -54,16 +56,4 @@ public class Employee extends AuditableEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-            "id=" + id + "\n" +
-            ", name=" + name + "\n" +
-            ", surname=" + surname + "\n" +
-            ", login=" + login + "\n" +
-            ", password=" + password + "\n" +
-            ", role=" + role.getId() + "\n" +
-            "}";
-    }
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -27,6 +28,7 @@ import javax.persistence.Table;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Tag extends AuditableEntity<Integer> {
 
@@ -38,13 +40,4 @@ public class Tag extends AuditableEntity<Integer> {
 
     @Column(name = "name", length = 20)
     private String tag_name;
-
-    @Override
-    public String toString() {
-        return "Tag{" +
-            "id=" + id + "\n" +
-            ", tag name=" + tag_name + "\n" +
-            "}";
-
-    }
 }

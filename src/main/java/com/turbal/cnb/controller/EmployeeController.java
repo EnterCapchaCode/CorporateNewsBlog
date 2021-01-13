@@ -9,7 +9,6 @@ import com.turbal.cnb.dto.EmployeeDto;
 import com.turbal.cnb.exception.ValidationException;
 import com.turbal.cnb.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 @AllArgsConstructor
-@Slf4j
 public class EmployeeController {
 
     private final EmployeeService employeeService;
