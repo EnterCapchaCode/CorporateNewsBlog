@@ -5,6 +5,7 @@
 
 package com.turbal.cnb.dto;
 
+import com.turbal.cnb.entity.enums.Roles;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -23,5 +24,5 @@ public class EmployeeDto {
     @NotEmpty(message = EMPLOYEE_EMAIL_NOT_EMPTY)
     private String login;
     private String password;
-    private RoleDto roleDto;
+    private Roles role;
 }

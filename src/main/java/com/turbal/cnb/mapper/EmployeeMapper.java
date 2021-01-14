@@ -21,13 +21,13 @@ public interface EmployeeMapper {
     @Mapping(target = "surname", source = "employee.surname")
     @Mapping(target = "login", source = "employee.login")
     @Mapping(target = "password", source = "employee.password")
-    @Mapping(target = "roleDto", source = "employee.role")
+    @Mapping(target = "role", source = "employee.role")
     EmployeeDto toDto(Employee employee);
 
     @Mapping(target = "name", source = "employeeDto.name")
     @Mapping(target = "surname", source = "employeeDto.surname")
     @Mapping(target = "login", source = "employeeDto.login")
     @Mapping(target = "password", source = "employeeDto.password")
-    @Mapping(target = "role", source = "employeeDto.roleDto")
+    @Mapping(target = "role", source = "employeeDto.role")
     Employee toEntity(EmployeeDto employeeDto);
 }
