@@ -31,13 +31,13 @@ public class PostController {
         return postService.savePost(postDto);
     }
 
-    @PostMapping("/positive-rating/{id}")
-    private ResponseEntity<Void> likePost(@PathVariable Integer id) {
+    @PostMapping("/like/{id}")
+    public ResponseEntity<Void> likePost(@PathVariable Integer id) {
         postService.likePost(id);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/negative-rating/{id}")
+    @PostMapping("/dislike/{id}")
     private ResponseEntity<Void> dislikePost(@PathVariable Integer id) {
         postService.dislikePost(id);
         return ResponseEntity.ok().build();
@@ -49,17 +49,17 @@ public class PostController {
     }
 
     @GetMapping("{tag}")
-    private List<PostDto> findPostByTag(@PathVariable String tag) {
+    public List<PostDto> findPostByTag(@PathVariable String tag) {
         return postService.findPostsByTag(tag);
     }
 
     @GetMapping("search/{title}")
-    private List<PostDto> findPostByTitle(@PathVariable String title) {
+    public List<PostDto> findPostByTitle(@PathVariable String title) {
         return postService.findPostByTitleIsContaining(title);
     }
 
     @DeleteMapping("{id}")
-    private ResponseEntity<Void> deletePost(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);
         return ResponseEntity.ok().build();
     }
