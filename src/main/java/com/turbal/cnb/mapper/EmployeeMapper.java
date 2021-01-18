@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = "spring", uses = RoleMapper.class)
+@Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
     @Mapping(target = "id", source = "employee.id")

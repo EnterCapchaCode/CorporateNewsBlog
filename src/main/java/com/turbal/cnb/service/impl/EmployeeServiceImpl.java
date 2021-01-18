@@ -44,20 +44,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto findByLogin(String login) {
-        var employee = employeeRepo.findByLogin(login);
-        if (employee != null) {
-            log.info("Employee with login = {} found", login);
-            return employeeMapper.toDto(employee);
-        }
-        log.info("Employee not found");
-        return null;
-    }
-
-    @Override
     public List<EmployeeDto> findAll() {
         log.info("Got a list of all employees");
         return employeeRepo.findAll()
+            .stream()
+            .map(employeeMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmployeeDto> findEmployeeByRequest(String request) {
+        log.info("Got a list of employees by request = {}", request);
+        return employeeRepo.findEmployeeByRequest(request)
             .stream()
             .map(employeeMapper::toDto)
             .collect(Collectors.toList());

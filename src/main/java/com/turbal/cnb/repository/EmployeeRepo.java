@@ -9,15 +9,29 @@ import com.turbal.cnb.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
 
-    Employee findByLogin(String login);
+    Optional<Employee> findEmployeeByLogin(String login);
 
-
-    @Query("select u "
-        + " from Employee u"
-        + " where u.googleId = LOWER(:id)")
+    @Query("""
+        select e 
+        from Employee e
+        where e.googleId = LOWER(:id) 
+        """)
     Optional<Employee> findByGoogleId(String id);
+
+    /**
+     * This solution consumes a lot of resources, but for my small demo-project this is acceptable
+     */
+    @Query("""
+        select e 
+        from Employee e 
+        where e.login like concat('%', :request, '%') or 
+        e.name like concat(:request, '%') or 
+        e.surname like concat(:request, '%')
+        """)
+    List<Employee> findEmployeeByRequest(String request);
 }

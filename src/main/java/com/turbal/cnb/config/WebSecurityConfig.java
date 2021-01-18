@@ -23,8 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .mvcMatchers("/").permitAll()
-            .anyRequest().authenticated()
+            .mvcMatchers("/**").permitAll()
+            //.anyRequest().authenticated()
             .and()
             .csrf().disable();
     }
@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newEmployee.setName((String) map.get("given_name"));
                 newEmployee.setSurname((String) map.get("family_name"));
                 newEmployee.setLogin((String) map.get("email"));
+                newEmployee.setGoogleId((String) map.get("sub"));
                 newEmployee.setRole(Roles.READER);
 
                 return newEmployee;

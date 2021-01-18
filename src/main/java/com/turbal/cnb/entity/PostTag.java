@@ -21,6 +21,7 @@ import javax.persistence.Table;
 /**
  * PostTag Database Entity
  */
+@Deprecated
 @Entity
 @Table(name = "post_tag")
 @Data

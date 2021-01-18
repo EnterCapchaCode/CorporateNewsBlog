@@ -17,7 +17,7 @@ public interface EmployeeService {
 
     void deleteEmployee(Integer id);
 
-    EmployeeDto findByLogin(String login);
-
     List<EmployeeDto> findAll();
+
+    List<EmployeeDto> findEmployeeByRequest(String request);
 }

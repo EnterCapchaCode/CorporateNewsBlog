@@ -23,6 +23,6 @@ public class EmployeeValidation {
         if (isNull(employeeDto.getLogin()) || employeeDto.getLogin().isEmpty()) {
             throw new ValidationException("Login is empty");
         }
-        log.info("Employee with ID = {} passed validation", employeeDto.getId());
+        log.info("Employee with login = {} passed validation", employeeDto.getLogin());
     }
 }

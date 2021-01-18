@@ -6,6 +6,7 @@
 package com.turbal.cnb.service;
 
 import com.turbal.cnb.dto.PostDto;
+import com.turbal.cnb.entity.Post;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ public interface PostService {
 
     void deletePost(Integer id);
 
-    PostDto findPostByTitle(String title);
+    List<PostDto> findPostByTitleIsContaining(String title);
 
     List<PostDto> findAll();
+
+    List<PostDto> findPostsByTag(String tag);
 }

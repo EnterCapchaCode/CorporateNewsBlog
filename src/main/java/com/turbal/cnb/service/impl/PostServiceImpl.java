@@ -13,13 +13,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl extends BaseService implements PostService {
 
     private final PostRepo postRepo;
     private final PostMapper postMapper;
@@ -27,8 +28,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto savePost(PostDto postDto) {
         var post = postMapper.toEntity(postDto);
-        postRepo.save(post);
+        var employee = getCurrentEmployee();
+        //employee.getPosts().add(post);
 
+        post.setEmployee(employee);
+        post.setCreationDate(LocalDate.now());
+        post.setNegativeRating(0);
+        post.setPositiveRating(0);
+
+        postRepo.save(post);
         log.info("Post with title = {} saved", postDto.getTitle());
         return postDto;
     }
@@ -40,14 +48,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto findPostByTitle(String title) {
-        var post = postRepo.findPostByTitle(title);
-        if(post != null){
-            log.info("Post with title = {} found", post.getTitle());
-            return postMapper.toDto(post);
+    public List<PostDto> findPostByTitleIsContaining(String title) {
+        var post = postRepo.findPostByTitleIsContaining(title);
+        if (post != null) {
+            log.info("Got a list of posts with title = {}", title);
+            return post.stream().map(postMapper::toDto).collect(Collectors.toList());
         }
-        log.info("Post not found");
+        log.info("Posts not found");
         return null;
+    }
+
+    @Override
+    public List<PostDto> findPostsByTag(String tag){
+        log.info("Got a list of posts with tag = {}", tag);
+        return postRepo.findPostsByTag(tag)
+            .stream()
+            .map(postMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @Override
