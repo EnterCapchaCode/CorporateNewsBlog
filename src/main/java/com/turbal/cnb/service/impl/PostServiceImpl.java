@@ -6,7 +6,13 @@
 package com.turbal.cnb.service.impl;
 
 import com.turbal.cnb.dto.PostDto;
+import com.turbal.cnb.entity.Dislike;
+import com.turbal.cnb.entity.Employee;
+import com.turbal.cnb.entity.Like;
+import com.turbal.cnb.entity.Post;
 import com.turbal.cnb.mapper.PostMapper;
+import com.turbal.cnb.repository.DislikeRepo;
+import com.turbal.cnb.repository.LikeRepo;
 import com.turbal.cnb.repository.PostRepo;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
@@ -24,6 +30,8 @@ public class PostServiceImpl extends BaseService implements PostService {
 
     private final PostRepo postRepo;
     private final PostMapper postMapper;
+    private final LikeRepo likeRepo;
+    private final DislikeRepo dislikeRepo;
 
     @Override
     public PostDto savePost(PostDto postDto) {
@@ -59,12 +67,48 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findPostsByTag(String tag){
+    public List<PostDto> findPostsByTag(String tag) {
         log.info("Got a list of posts with tag = {}", tag);
         return postRepo.findPostsByTag(tag)
             .stream()
             .map(postMapper::toDto)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void likePost(Integer id) {
+        var post = postRepo.findPostById(id);
+        var employee = getCurrentEmployee();
+        var currentPositiveRating = post.getPositiveRating();
+        var currentLike = likeRepo.findLikeByPostAndAndEmployee(post, employee);
+
+        if (currentLike.isPresent()) {
+            likeRepo.delete(currentLike.get());
+            post.setPositiveRating(currentPositiveRating - 1);
+            log.info("Like deleted from post with id = {}", post.getId());
+        } else {
+            likeRepo.save(createLike(post, employee));
+            post.setPositiveRating(currentPositiveRating + 1);
+            log.info("Like added to post with id = {}", post.getId());
+        }
+    }
+
+    @Override
+    public void dislikePost(Integer id) {
+        var post = postRepo.findPostById(id);
+        var employee = getCurrentEmployee();
+        var currentNegativeRating = post.getNegativeRating();
+        var currentDislike = dislikeRepo.findDislikeByPostAndAndEmployee(post, employee);
+
+        if (currentDislike.isPresent()) {
+            dislikeRepo.delete(currentDislike.get());
+            post.setNegativeRating(currentNegativeRating - 1);
+            log.info("Dislike deleted from post with id = {}", post.getId());
+        } else {
+            dislikeRepo.save(createDislike(post, employee));
+            post.setNegativeRating(currentNegativeRating + 1);
+            log.info("Dislike added to post with id = {}", post.getId());
+        }
     }
 
     @Override
@@ -74,5 +118,19 @@ public class PostServiceImpl extends BaseService implements PostService {
             .stream()
             .map(postMapper::toDto)
             .collect(Collectors.toList());
+    }
+
+    private Like createLike(Post post, Employee employee) {
+        return Like.builder()
+            .post(post)
+            .employee(employee)
+            .build();
+    }
+
+    private Dislike createDislike(Post post, Employee employee) {
+        return Dislike.builder()
+            .post(post)
+            .employee(employee)
+            .build();
     }
 }

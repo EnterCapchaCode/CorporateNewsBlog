@@ -31,6 +31,18 @@ public class PostController {
         return postService.savePost(postDto);
     }
 
+    @PostMapping("/positive-rating/{id}")
+    private ResponseEntity<Void> likePost(@PathVariable Integer id) {
+        postService.likePost(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/negative-rating/{id}")
+    private ResponseEntity<Void> dislikePost(@PathVariable Integer id) {
+        postService.dislikePost(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     public List<PostDto> findAllPosts() {
         return postService.findAll();
@@ -41,14 +53,14 @@ public class PostController {
         return postService.findPostsByTag(tag);
     }
 
+    @GetMapping("search/{title}")
+    private List<PostDto> findPostByTitle(@PathVariable String title) {
+        return postService.findPostByTitleIsContaining(title);
+    }
+
     @DeleteMapping("{id}")
     private ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("search/{title}")
-    private List<PostDto> findPostByTitle(@PathVariable String title) {
-        return postService.findPostByTitleIsContaining(title);
     }
 }

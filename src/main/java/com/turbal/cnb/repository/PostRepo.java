@@ -15,6 +15,8 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
     Post findPostByTitle(String title);
 
+    Post findPostById(Integer id);
+
     @Query("select p"
         + " from Post p"
         + " join PostTag pt on p.id = pt.post"

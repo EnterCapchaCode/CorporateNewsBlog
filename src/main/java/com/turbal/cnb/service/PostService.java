@@ -6,7 +6,6 @@
 package com.turbal.cnb.service;
 
 import com.turbal.cnb.dto.PostDto;
-import com.turbal.cnb.entity.Post;
 
 import java.util.List;
 
@@ -21,4 +20,8 @@ public interface PostService {
     List<PostDto> findAll();
 
     List<PostDto> findPostsByTag(String tag);
+
+    void likePost(Integer id);
+
+    void dislikePost(Integer id);
 }
