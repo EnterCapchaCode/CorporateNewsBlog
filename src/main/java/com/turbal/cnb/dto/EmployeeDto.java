@@ -23,6 +23,6 @@ public class EmployeeDto {
     @NotNull(message = EMPLOYEE_EMAIL_NOT_NULL)
     @NotEmpty(message = EMPLOYEE_EMAIL_NOT_EMPTY)
     private String login;
-    private String password;
+    private String googleId;
     private Roles role;
 }

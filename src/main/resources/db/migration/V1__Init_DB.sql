@@ -13,7 +13,6 @@ create table employee(
     name character varying(20),
     surname character varying(20),
     login character varying(30),
-    password character varying(30),
     role_id int not null
 );
 

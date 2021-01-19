@@ -5,9 +5,8 @@
 
 package com.turbal.cnb.controller;
 
-import com.turbal.cnb.dto.CommentDto;
-import com.turbal.cnb.dto.PostDto;
-import com.turbal.cnb.service.CommentService;
+import com.turbal.cnb.dto.TagDto;
+import com.turbal.cnb.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,25 +20,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/tags")
 @AllArgsConstructor
-public class CommentController {
+public class TagController {
 
-    private final CommentService commentService;
+    private final TagService tagService;
 
-    @PostMapping(value = "/{employee_id}")
-    public CommentDto saveComment(@PathVariable Integer employee_id, @RequestBody CommentDto commentDto) {
-        return commentService.saveComment(commentDto, employee_id);
+    @GetMapping("{request}")
+    public List<TagDto> findAllTags(@PathVariable String request) {
+        return tagService.findTagByRequest(request);
     }
 
-    @GetMapping("{id}")
-    public List<CommentDto> findAllCommentsByPost(@PathVariable Integer id) {
-        return commentService.findAllCommentsInPost(id);
+    @PostMapping
+    public TagDto addTag(@RequestBody TagDto tagDto) {
+        return tagService.addTag(tagDto);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Integer id){
-        commentService.deleteComment(id);
+    public ResponseEntity<Void> deleteTag(@PathVariable Integer id) {
+        tagService.deleteTag(id);
         return ResponseEntity.ok().build();
     }
 }

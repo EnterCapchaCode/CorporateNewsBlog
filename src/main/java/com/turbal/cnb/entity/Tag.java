@@ -39,5 +39,5 @@ public class Tag extends AuditableEntity<Integer> {
     private Integer id;
 
     @Column(name = "name", length = 20)
-    private String tag_name;
+    private String tagName;
 }

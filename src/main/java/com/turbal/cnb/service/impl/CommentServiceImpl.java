@@ -6,9 +6,7 @@
 package com.turbal.cnb.service.impl;
 
 import com.turbal.cnb.dto.CommentDto;
-import com.turbal.cnb.dto.PostDto;
 import com.turbal.cnb.mapper.CommentMapper;
-import com.turbal.cnb.mapper.PostMapper;
 import com.turbal.cnb.repository.CommentRepo;
 import com.turbal.cnb.repository.PostRepo;
 import com.turbal.cnb.service.CommentService;
@@ -27,7 +25,6 @@ public class CommentServiceImpl extends BaseService implements CommentService {
     private final CommentRepo commentRepo;
     private final PostRepo postRepo;
     private final CommentMapper commentMapper;
-    private final PostMapper postMapper;
 
     @Override
     public void deleteComment(Integer id) {
@@ -50,8 +47,9 @@ public class CommentServiceImpl extends BaseService implements CommentService {
     }
 
     @Override
-    public List<CommentDto> findAllCommentsByPost(PostDto postDto) {
-        var post = postMapper.toEntity(postDto);
+    public List<CommentDto> findAllCommentsInPost(Integer id) {
+        log.info("Got a list of all comments of post with ID = {}", id);
+        var post = postRepo.findPostById(id);
         return commentRepo.findCommentByPost(post)
             .stream()
             .map(commentMapper::toDto)

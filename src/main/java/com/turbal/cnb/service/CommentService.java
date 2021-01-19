@@ -15,5 +15,5 @@ public interface CommentService {
 
     CommentDto saveComment(CommentDto commentDto, Integer postId);
 
-    List<CommentDto> findAllCommentsByPost(PostDto postDto);
+    List<CommentDto> findAllCommentsInPost(Integer id);
 }

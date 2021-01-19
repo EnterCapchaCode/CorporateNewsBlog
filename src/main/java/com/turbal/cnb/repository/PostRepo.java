@@ -21,7 +21,7 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
         + " from Post p"
         + " join PostTag pt on p.id = pt.post"
         + " join pt.tag t"
-        + " where t.tag_name = LOWER(:tag)")
+        + " where t.tagName = LOWER(:tag)")
     List<Post> findPostsByTag(String tag);
 
     List<Post> findPostByTitleIsContaining(String title);

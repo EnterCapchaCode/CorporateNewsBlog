@@ -53,9 +53,6 @@ public class Employee extends AuditableEntity<Integer> {
     @Column(name = "login", length = 30)
     private String login;
 
-    @Column(name = "password", length = 30)
-    private String password;
-
     @Column(name = "role")
     @Convert(converter = Roles.Converter.class)
     private Roles role;
