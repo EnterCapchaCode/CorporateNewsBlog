@@ -17,6 +17,7 @@ import com.turbal.cnb.repository.PostRepo;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -112,9 +113,9 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findAll() {
+    public List<PostDto> findAll(Pageable pageable) {
         log.info("Got a list of all posts");
-        return postRepo.findAll()
+        return postRepo.findAll(pageable)
             .stream()
             .map(postMapper::toDto)
             .collect(Collectors.toList());

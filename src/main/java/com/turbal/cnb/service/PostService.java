@@ -6,6 +6,8 @@
 package com.turbal.cnb.service;
 
 import com.turbal.cnb.dto.PostDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface PostService {
 
     List<PostDto> findPostByTitleIsContaining(String title);
 
-    List<PostDto> findAll();
+    List<PostDto> findAll(Pageable pageable);
 
     List<PostDto> findPostsByTag(String tag);
 
