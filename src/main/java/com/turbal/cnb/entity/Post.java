@@ -66,4 +66,8 @@ public class Post extends AuditableEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 }

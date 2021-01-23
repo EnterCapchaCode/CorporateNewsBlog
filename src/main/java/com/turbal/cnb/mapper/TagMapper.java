@@ -22,6 +22,7 @@ public interface TagMapper {
 
     @Mapping(target = "id", source = "tagDto.id")
     @Mapping(target = "tagName", source = "tagDto.tagName")
+    @Mapping(target = "posts", ignore = true)
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "modified", ignore = true)

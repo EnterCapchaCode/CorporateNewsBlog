@@ -21,4 +21,5 @@ public class PostDto {
     private Integer negativeRating;
     private Integer positiveRating;
     private EmployeeDto author;
+    private TagDto tagDto;
 }

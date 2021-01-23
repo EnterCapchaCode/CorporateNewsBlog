@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = EmployeeMapper.class)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {EmployeeMapper.class, TagMapper.class})
 public interface PostMapper {
 
     @Mapping(target = "id", source = "post.id")
@@ -28,6 +28,7 @@ public interface PostMapper {
     @Mapping(target = "negativeRating", source = "post.negativeRating")
     @Mapping(target = "positiveRating", source = "post.positiveRating")
     @Mapping(target = "author", source = "post.employee")
+    @Mapping(target = "tagDto", source = "post.tag")
     PostDto toDto(Post post);
 
     List<PostDto> convertToList(Page<Post> posts);
@@ -40,6 +41,7 @@ public interface PostMapper {
     @Mapping(target = "negativeRating", source = "postDto.negativeRating")
     @Mapping(target = "positiveRating", source = "postDto.positiveRating")
     @Mapping(target = "employee", source = "postDto.author")
+    @Mapping(target = "tag", source = "postDto.tagDto")
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "modified", ignore = true)
