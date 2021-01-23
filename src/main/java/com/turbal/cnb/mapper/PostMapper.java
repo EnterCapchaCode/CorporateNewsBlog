@@ -28,20 +28,11 @@ public interface PostMapper {
     @Mapping(target = "negativeRating", source = "post.negativeRating")
     @Mapping(target = "positiveRating", source = "post.positiveRating")
     @Mapping(target = "author", source = "post.employee")
-    @Mapping(target = "tagDto", source = "post.tag")
     PostDto toDto(Post post);
 
     List<PostDto> convertToList(Page<Post> posts);
 
-    @Mapping(target = "title", source = "postDto.title")
-    @Mapping(target = "description", source = "postDto.description")
-    @Mapping(target = "text", source = "postDto.text")
-    @Mapping(target = "creationDate", source = "postDto.creationDate")
-    @Mapping(target = "modificationDate", source = "postDto.modificationDate")
-    @Mapping(target = "negativeRating", source = "postDto.negativeRating")
-    @Mapping(target = "positiveRating", source = "postDto.positiveRating")
     @Mapping(target = "employee", source = "postDto.author")
-    @Mapping(target = "tag", source = "postDto.tagDto")
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "modified", ignore = true)

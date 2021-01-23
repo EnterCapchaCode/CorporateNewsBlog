@@ -4,7 +4,7 @@ export default {
     profile: null,
     messages: [],
     filter: "",
-    editingMessage: null,
+    editingMessage: {},
     channel: null,
     users: null,
   },

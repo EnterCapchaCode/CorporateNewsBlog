@@ -8,7 +8,7 @@
         </form>
       </div>
     </div>
-    <message-edit></message-edit>
+    <message-edit :profile="profile" :messages="messages"></message-edit>
     <message-list :pageInfo="pageInfo" :messages="messages" :profile="profile"></message-list>
   </div>
 </template>

@@ -13,4 +13,6 @@ import java.util.List;
 public interface TagRepo extends JpaRepository<Tag, Integer> {
 
     List<Tag> findTagByTagNameIsContaining(String request);
+
+    Tag findByTagName(String tagName);
 }

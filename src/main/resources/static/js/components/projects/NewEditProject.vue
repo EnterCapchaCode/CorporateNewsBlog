@@ -76,7 +76,7 @@
                         endDate: this.$store.getters.getEndDate});
 
                 const userId = this.profile.id;
-                return axios({
+                axios({
                     method: updateProject ? 'put' : 'post',
                     url: `${location.origin}/project`,
                     data: projectDTO

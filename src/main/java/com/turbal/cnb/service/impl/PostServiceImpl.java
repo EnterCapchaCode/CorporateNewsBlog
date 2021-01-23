@@ -10,10 +10,12 @@ import com.turbal.cnb.entity.Dislike;
 import com.turbal.cnb.entity.Employee;
 import com.turbal.cnb.entity.Like;
 import com.turbal.cnb.entity.Post;
+import com.turbal.cnb.entity.Tag;
 import com.turbal.cnb.mapper.PostMapper;
 import com.turbal.cnb.repository.DislikeRepo;
 import com.turbal.cnb.repository.LikeRepo;
 import com.turbal.cnb.repository.PostRepo;
+import com.turbal.cnb.repository.TagRepo;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,21 +35,37 @@ public class PostServiceImpl extends BaseService implements PostService {
     private final PostMapper postMapper;
     private final LikeRepo likeRepo;
     private final DislikeRepo dislikeRepo;
+    private final TagRepo tagRepo;
 
     @Override
-    public PostDto savePost(PostDto postDto) {
+    public PostDto savePost(PostDto postDto, Employee currentUser) {
         var post = postMapper.toEntity(postDto);
-        var employee = getCurrentEmployee();
+//        var employee = getCurrentEmployee(); зочем???
         //employee.getPosts().add(post);
 
-        post.setEmployee(employee);
+        post.setEmployee(currentUser);
         post.setCreationDate(LocalDate.now());
         post.setNegativeRating(0);
         post.setPositiveRating(0);
 
-        postRepo.save(post);
+        setTagToNewPost(postDto, post);
+
+        Post newPost = postRepo.save(post);
         log.info("Post with title = {} saved", postDto.getTitle());
-        return postDto;
+        return postMapper.toDto(newPost);
+    }
+
+    private void setTagToNewPost(PostDto postDto, Post post) {
+        var tagName = postDto.getTag().getTagName();
+        Tag persistedTag = tagRepo.findByTagName(tagName);
+
+        if (persistedTag != null) {
+            post.setTag(persistedTag);
+        } else {
+            Tag newTag = new Tag();
+            newTag.setTagName(tagName);
+            post.setTag(tagRepo.save(newTag));
+        }
     }
 
     @Override

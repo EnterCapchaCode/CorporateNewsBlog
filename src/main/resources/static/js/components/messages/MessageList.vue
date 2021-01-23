@@ -10,17 +10,17 @@
           </div>
           <div class="m-2">
             <span>{{message.text}}</span><br>
-            <i>#{{message.tag}}</i>
+            <i>#{{message.tag.tagName}}</i>
           </div>
           <div class="card-footer text-muted message-footer_flex-block__parent">
             <div class="message-footer_flex-block" v-bind:class="{ directColumn: message.author.id !== profile.id }">
               <img v-if="message.author && message.author.userpic" :src="message.author.userpic" alt="User's avatar" />
-              <router-link :to="`/user-messages/${message.author.id}`">{{message.author.name}}</router-link>
+              <span>{{message.author.name}}</span>
               <div v-if="message.edited"><i alt="Edited" class="fas fa-pencil-alt"></i></div>
             </div>
             
-            <a v-if="message.author.id === profile.id" class="btn btn-primary"
-                         v-on:click="bindMessageForEdit(message)">Edit</a>
+            <a v-if="profile.role === 'ADMIN'"
+                         v-on:click="dropTheMessage(message)"><i class="fas fa-trash-alt"></i></a>
           </div>
         </div>
       </div>
@@ -42,8 +42,31 @@
       }
     },
     methods: {
-      bindMessageForEdit(item) {
-        this.$store.commit('setEditingMessage', item);
+      dropTheMessage(item) {
+
+        fetch(`${location.origin}/posts/${item.id}`, {
+          method: 'delete'
+        })
+            .then(res => {
+              if (res.apierror) {
+                this.$toasted.error(` ${res.apierror.message}: ${res.apierror.status}!`, {
+                  theme: "bubble",
+                  position: "top-center",
+                  duration : 3000,
+                  icon: "error_outline"
+                });
+              } else {
+                const index = this.messages.indexOf(item);
+                if (index > -1) {
+                  this.messages.splice(index, 1);
+                  this.$store.commit('setMessages', this.messages);
+                }
+              }
+            })
+            .catch(err => {
+              debugger;
+              console.log(err);
+            });
       }
     }
   }

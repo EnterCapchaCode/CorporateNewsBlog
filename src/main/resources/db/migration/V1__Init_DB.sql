@@ -44,7 +44,7 @@ create table tag(
 alter table employee add constraint employee_role_fk foreign key (role_id) references role (id);
 
 alter table post add constraint  post_employee_fk foreign key (employee_id) references employee (id);
-alter table post add constraint  post_tag_fk foreign key (employee_id) references tag (id);
+alter table post add constraint  post_tag_fk foreign key (tag_id) references tag (id);
 
 alter table comment add constraint comment_employee_fk foreign key (employee_id) references employee (id);
 alter table comment add constraint comment_post_fk foreign key (post_id) references post (id);
