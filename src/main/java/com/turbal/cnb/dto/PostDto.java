@@ -20,5 +20,5 @@ public class PostDto {
     private LocalDate modificationDate;
     private Integer negativeRating;
     private Integer positiveRating;
-    private EmployeeDto employeeDto;
+    private EmployeeDto author;
 }

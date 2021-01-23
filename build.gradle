@@ -18,6 +18,18 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+	generated{
+		java.srcDir "${buildDir}/generated/src/java/"
+	}
+}
+
+task copyTestResources(type: Copy) {
+	from "${projectDir}/src/test/resources"
+	into "${buildDir}/classes/test"
+}
+processTestResources.dependsOn copyTestResources
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -28,6 +40,7 @@ dependencies {
 	compile "org.flywaydb:flyway-core:6.5.7"
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

@@ -32,7 +32,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "employee")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Post extends AuditableEntity<Integer> {
 

@@ -10,10 +10,11 @@ import com.turbal.cnb.dto.EmployeeDto;
 import com.turbal.cnb.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface EmployeeMapper {
 
     @Mapping(target = "id", source = "employee.id")
@@ -28,5 +29,9 @@ public interface EmployeeMapper {
     @Mapping(target = "login", source = "employeeDto.login")
     @Mapping(target = "googleId", source = "employeeDto.googleId")
     @Mapping(target = "role", source = "employeeDto.role")
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "created", ignore = true)
+    @Mapping(target = "modified", ignore = true)
+    @Mapping(target = "posts", ignore = true)
     Employee toEntity(EmployeeDto employeeDto);
 }

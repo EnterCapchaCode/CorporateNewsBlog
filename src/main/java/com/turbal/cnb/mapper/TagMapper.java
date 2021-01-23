@@ -9,10 +9,11 @@ import com.turbal.cnb.dto.TagDto;
 import com.turbal.cnb.entity.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface TagMapper {
 
     @Mapping(target = "id", source = "tag.id")
@@ -21,5 +22,8 @@ public interface TagMapper {
 
     @Mapping(target = "id", source = "tagDto.id")
     @Mapping(target = "tagName", source = "tagDto.tagName")
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "created", ignore = true)
+    @Mapping(target = "modified", ignore = true)
     Tag toEntity(TagDto tagDto);
 }
