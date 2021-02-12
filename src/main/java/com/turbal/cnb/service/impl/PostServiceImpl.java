@@ -40,8 +40,6 @@ public class PostServiceImpl extends BaseService implements PostService {
     @Override
     public PostDto savePost(PostDto postDto, Employee currentUser) {
         var post = postMapper.toEntity(postDto);
-//        var employee = getCurrentEmployee(); зочем???
-        //employee.getPosts().add(post);
 
         post.setEmployee(currentUser);
         post.setCreationDate(LocalDate.now());

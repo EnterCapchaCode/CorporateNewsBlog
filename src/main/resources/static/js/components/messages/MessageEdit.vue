@@ -1,36 +1,55 @@
 <template>
   <div v-if="profile.role === 'CREATOR' || profile.role === 'ADMIN'">
-    <a class="btn btn-primary color-white" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+    <a class="btn btn-primary color-white" data-toggle="collapse" href="#collapseExample" role="button"
+       aria-expanded="false"
        aria-controls="collapseExample">
-      Message Editor
+      New post
     </a>
     <div class="collapse" v-bind:class="{ show: editingMessage && editingMessage.text }" id="collapseExample">
-      <div class="form-group mt-3">
-        <form enctype="multipart/form-data">
-          <div class="form-group">
-            <input class="form-control" v-bind:class="{ 'is-invalid': textError }" ref="messageText"
-                   v-model="editingMessage && editingMessage.text" type="text" name="text" placeholder="Input your message"/>
-            <div v-if="textError" class="invalid-feedback">{{ textError }}</div>
-          </div>
-          <div class="form-group">
-            <input class="form-control" v-bind:class="{ 'is-invalid': textError }" ref="messageTag"
-                   type="text" name="tag" placeholder="Input your tag"
-                   v-model="editingMessage && editingMessage.tag"/>
-            <div v-if="tagError" class="invalid-feedback">{{ tagError }}</div>
-          </div>
+      <v-form>
+        <v-container>
+          <v-text-field
+              label="Title"
+              outlined
+              dense
+              ref="messageTitle"
+              v-model="editingMessage && editingMessage.title"
+              type="title"
+              name="title"
+          ></v-text-field>
+          <v-textarea
+              ref="messageText"
+              v-model="editingMessage && editingMessage.text"
+              type="text"
+              name="text"
+              color="teal"
+          >
+            <template v-slot:label>
+              <div>
+                Your text
+              </div>
+            </template>
+          </v-textarea>
+          <v-text-field
+              label="Tag"
+              outlined
+              dense
+              ref="messageTag"
+              v-model="editingMessage && editingMessage.tag"
+              type="tag"
+              name="tag"
+          ></v-text-field>
           <input type="hidden" name="id" :value="editingMessage && editingMessage.id" ref="messageId"/>
           <div class="form-group">
-            <button class="btn btn-primary mt-3" v-on:click="postMessage">Save message</button>
+            <button class="btn btn-primary mt-3" v-on:click="postMessage">Save</button>
           </div>
-        </form>
-      </div>
+        </v-container>
+      </v-form>
     </div>
   </div>
 </template>
 
 <script>
-import fontawesome from '@fortawesome/fontawesome'
-import faSolid from '@fortawesome/fontawesome-free-solid'
 import axios from "axios";
 
 export default {
@@ -51,6 +70,7 @@ export default {
       const requestBody = {
         id: this.$refs.messageId.value,
         text: this.$refs.messageText.value,
+        title: this.$refs.messageTitle.value,
         tag: {
           tagName: this.$refs.messageTag.value
         },

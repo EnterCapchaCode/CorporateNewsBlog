@@ -3,7 +3,9 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <form class="form-inline">
-          <input type="text" name="filter" placeholder="Search by tag"  v-model="filter"/>
+          <label>
+            <input type="text" name="filter" placeholder="Search by tag"  v-model="filter"/>
+          </label>
           <button v-on:click="getFilteredMessages()" class="btn btn-primary ml-2" type="button">Search</button>
         </form>
       </div>

@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Test Control Application</a>
+        <a class="navbar-brand" href="/">Softeq News Blog</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,9 +18,6 @@
                 </li>
                 <li v-if="profile && profile.role === 'ADMIN'" class="nav-item">
                     <router-link class="nav-link" to="/users">User List</router-link>
-                </li>
-                <li v-if="profile" class="nav-item">
-                    <router-link class="nav-link" :to="`/user-messages/${profile.id}`">My messages</router-link>
                 </li>
             </ul>
 <!--            <div v-if="profile" class="user-block-item">-->
