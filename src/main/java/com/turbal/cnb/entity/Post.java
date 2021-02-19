@@ -42,11 +42,8 @@ public class Post extends AuditableEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "title", length = 30)
+    @Column(name = "title", length = 60)
     private String title;
-
-    @Column(name = "description", length = 100)
-    private String description;
 
     @Column(name = "text", length = 2000)
     private String text;

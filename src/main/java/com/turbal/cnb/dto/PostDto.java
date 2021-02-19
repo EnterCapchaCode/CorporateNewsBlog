@@ -14,7 +14,6 @@ public class PostDto {
 
     private Integer id;
     private String title;
-    private String description;
     private String text;
     private LocalDate creationDate;
     private LocalDate modificationDate;

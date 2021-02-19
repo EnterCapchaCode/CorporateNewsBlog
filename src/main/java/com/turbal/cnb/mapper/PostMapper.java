@@ -21,7 +21,6 @@ public interface PostMapper {
 
     @Mapping(target = "id", source = "post.id")
     @Mapping(target = "title", source = "post.title")
-    @Mapping(target = "description", source = "post.description")
     @Mapping(target = "text", source = "post.text")
     @Mapping(target = "creationDate", source = "post.creationDate")
     @Mapping(target = "modificationDate", source = "post.modificationDate")
