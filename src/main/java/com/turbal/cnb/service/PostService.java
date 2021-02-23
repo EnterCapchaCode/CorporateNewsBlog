@@ -20,9 +20,9 @@ public interface PostService {
 
     List<PostDto> findPostByTitleIsContaining(String title);
 
-    List<PostDto> findAll(Pageable pageable);
+    List<PostDto> findAll();
 
-    List<PostDto> findPostsByTag(String tag);
+    List<PostDto> findPostsByTag(String tag) throws Exception;
 
     void likePost(Integer id);
 

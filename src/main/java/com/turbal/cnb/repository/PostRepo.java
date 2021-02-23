@@ -6,6 +6,7 @@
 package com.turbal.cnb.repository;
 
 import com.turbal.cnb.entity.Post;
+import com.turbal.cnb.entity.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +21,7 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
     Post findPostById(Integer id);
 
-    List<Post> findPostsByTag(String tag);
+    List<Post> findPostsByTag(Tag tag);
 
     List<Post> findPostByTitleIsContaining(String title);
 }

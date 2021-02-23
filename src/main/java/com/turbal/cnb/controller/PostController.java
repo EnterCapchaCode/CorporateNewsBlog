@@ -53,22 +53,21 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{pageable}")
-    public Page<PostDto> findAllPosts(@PathVariable
-                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        var posts = postService.findAll(pageable);
-        return new PageImpl<>(posts);
+    @GetMapping()
+    public List<PostDto> findAllPosts() {
+        var posts = postService.findAll();
+        return posts;
     }
 
-    @GetMapping("{tag}")
-    public List<PostDto> findPostByTag(@PathVariable String tag) {
+    @GetMapping("search/{tag}")
+    public List<PostDto> findPostByTag(@PathVariable String tag) throws Exception {
         return postService.findPostsByTag(tag);
     }
 
-    @GetMapping("search/{title}")
-    public List<PostDto> findPostByTitle(@PathVariable String title) {
-        return postService.findPostByTitleIsContaining(title);
-    }
+//    @GetMapping("search/{title}")
+//    public List<PostDto> findPostByTitle(@PathVariable String title) {
+//        return postService.findPostByTitleIsContaining(title);
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {

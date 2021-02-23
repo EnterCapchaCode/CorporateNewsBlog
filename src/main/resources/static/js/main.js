@@ -10,6 +10,7 @@ import pagerStore from './store/pagerStore.js'
 import projectsStore from "./store/projectsStore.js";
 import createEditEntityStore from "./store/createEditEntityStore.js";
 import checkListOrderStore from "./store/checkListOrderStore.js";
+import usersStore from "./store/usersStore";
 
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
@@ -61,7 +62,7 @@ const routes = [
     { path: '/edit-check-list/:parentId/:id', component: NewEditTestCheckList, props: true },
     { path: '/view-check-list/:id', component: CheckList, props: true },
     { path: '/edit-check-list-test-case/:parentId/:id', component: EditCheckListTestCase, props: true },
-    { path: '/users', component: UserList, props: true },
+    { path: '/users/:id', component: UserList, props: true },
 ];
 
 const router = new VueRouter({
@@ -76,6 +77,7 @@ const store = new Vuex.Store({
         projects: projectsStore,
         createEditEntity: createEditEntityStore,
         checkListOrder: checkListOrderStore,
+        usersStore: usersStore
     }
 });
 

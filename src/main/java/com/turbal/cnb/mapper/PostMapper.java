@@ -35,5 +35,6 @@ public interface PostMapper {
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "modified", ignore = true)
+    @Mapping(target = "comments", ignore = true)
     Post toEntity(PostDto postDto);
 }

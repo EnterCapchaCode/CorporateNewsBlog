@@ -84,12 +84,16 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findPostsByTag(String tag) {
+    public List<PostDto> findPostsByTag(String tag) throws Exception {
+        Tag entityTag = tagRepo.findByTagName(tag);
+        if (entityTag == null) {
+            throw new Exception("Tag not found");
+        }
         log.info("Got a list of posts with tag = {}", tag);
-        return postRepo.findPostsByTag(tag)
-            .stream()
-            .map(postMapper::toDto)
-            .collect(Collectors.toList());
+        return postRepo.findPostsByTag(entityTag)
+                .stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -129,25 +133,25 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findAll(Pageable pageable) {
+    public List<PostDto> findAll() {
         log.info("Got a list of all posts");
-        return postRepo.findAll(pageable)
-            .stream()
-            .map(postMapper::toDto)
-            .collect(Collectors.toList());
+        return postRepo.findAll()
+                .stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     private Like createLike(Post post, Employee employee) {
         return Like.builder()
-            .post(post)
-            .employee(employee)
-            .build();
+                .post(post)
+                .employee(employee)
+                .build();
     }
 
     private Dislike createDislike(Post post, Employee employee) {
         return Dislike.builder()
-            .post(post)
-            .employee(employee)
-            .build();
+                .post(post)
+                .employee(employee)
+                .build();
     }
 }

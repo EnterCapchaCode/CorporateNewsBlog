@@ -1,12 +1,26 @@
 <template>
-  <div v-if="profile.role === 'CREATOR' || profile.role === 'ADMIN'">
-    <a class="btn btn-primary color-white" data-toggle="collapse" href="#collapseExample" role="button"
-       aria-expanded="false"
-       aria-controls="collapseExample">
-      New post
-    </a>
-    <div class="collapse" v-bind:class="{ show: editingMessage && editingMessage.text }" id="collapseExample">
-      <v-form>
+  <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="600px"
+  >
+    <template v-slot:activator="{ on, attrs }">
+      <div v-if="profile.role === 'CREATOR' || profile.role === 'ADMIN'">
+        <v-btn class="btn btn-primary color-white" role="button"
+               v-bind="attrs"
+               v-on="on"
+               text
+        >
+          New post
+        </v-btn>
+      </div>
+    </template>
+
+    <v-card>
+      <v-card-title>
+        <span class="headline">Post creating</span>
+      </v-card-title>
+      <v-card-text>
         <v-container>
           <v-text-field
               label="Title"
@@ -15,13 +29,13 @@
               ref="messageTitle"
               v-model="editingMessage && editingMessage.title"
               type="title"
-              name="title"
+              name="user-title"
           ></v-text-field>
           <v-textarea
               ref="messageText"
               v-model="editingMessage && editingMessage.text"
               type="text"
-              name="text"
+              name="user-text"
               color="teal"
           >
             <template v-slot:label>
@@ -37,16 +51,31 @@
               ref="messageTag"
               v-model="editingMessage && editingMessage.tag"
               type="tag"
-              name="tag"
+              name="corp-tag"
           ></v-text-field>
           <input type="hidden" name="id" :value="editingMessage && editingMessage.id" ref="messageId"/>
-          <div class="form-group">
-            <button class="btn btn-primary mt-3" v-on:click="postMessage">Save</button>
-          </div>
         </v-container>
-      </v-form>
-    </div>
-  </div>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+            color="blue darken-1"
+            text
+            @click="dialog = false"
+        >
+          Close
+        </v-btn>
+        <v-btn
+            color="blue darken-1"
+            text
+            @click="dialog = false"
+            v-on:click="postMessage"
+        >
+          Save
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -63,6 +92,7 @@ export default {
     return {
       textError: null,
       tagError: null,
+      dialog: false,
     }
   },
   methods: {
@@ -92,6 +122,13 @@ export default {
             } else {
               this.messages.push(res.data)
               this.$store.commit('setMessages', this.messages)
+              const editingMessage = {
+                id: null,
+                text: '',
+                title: '',
+                tag: ''
+              }
+              this.$store.commit("setEditingMessage", editingMessage)
             }
           })
           .catch(err => {

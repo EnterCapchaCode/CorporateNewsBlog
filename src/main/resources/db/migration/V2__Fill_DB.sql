@@ -8,7 +8,7 @@ insert into role (role_name) values ('creator');
 insert into role (role_name) values ('reader');
 
 insert into employee (name, surname, login, role_id) values ('Denis', 'Turbal', 'dturball@gamail.com', 1);
-insert into employee (name, surname, login, role_id) values ('Pavel', 'Kravchenko', 'pavelk@gamail.com', 2);
+insert into employee (name, surname, login, role_id) values ('Vlad', 'Martinkov', 'vmartinkov@gamail.com', 2);
 insert into employee (name, surname, login, role_id) values ('Uladzimir', 'Redzko', 'uredzko@gamail.com', 3);
 
 insert into tag (id, name) values (1, 'programming');

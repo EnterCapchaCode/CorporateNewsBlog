@@ -32,7 +32,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "posts")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Tag extends AuditableEntity<Integer> {
 
