@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
     <a class="navbar-brand" href="/">Softeq News Blog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,10 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Home</router-link>
-        </li>
-        <li v-if="profile" class="nav-item">
-          <router-link class="nav-link" :to="`/projects/${profile.id}`">Projects</router-link>
+          <router-link v-if="profile && profile.role === 'ADMIN'" class="nav-link" to="/">Home</router-link>
         </li>
         <li v-if="profile && profile.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link" :to="`/users/${profile.id}`">User List</router-link>

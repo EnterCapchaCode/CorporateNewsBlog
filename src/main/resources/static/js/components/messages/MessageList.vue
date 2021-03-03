@@ -28,12 +28,92 @@
             <span>{{ message.text }}</span><br>
           </div>
           <v-card-actions>
-            <v-btn
-                text
-                color="#2196f3"
+
+            <v-dialog
+                v-model="dialog"
+                max-width="600px"
+                :retain-focus="false"
             >
-              Comments
-            </v-btn>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    text
+                    color="#2196f3"
+                    @click="getCommentsByPost(message)"
+                >
+                  Comments
+                </v-btn>
+              </template>
+              <v-card align="center">
+                <v-card-title class="blue white--text" align="start">
+                  <span>{{ currentPostTitle }}</span>
+                  <v-list-item-subtitle disabled="true" align="start">
+                    <span>Created: {{ message.creationDate }}</span>
+                  </v-list-item-subtitle>
+                </v-card-title>
+                <v-card-text class="my-2 pb-0 pt-5">
+                  <v-text-field
+                      ref="commentText"
+                      v-model="userComment"
+                      label="Tap your comment"
+                      solo
+                      dense
+
+                      :append-outer-icon="'mdi-send'"
+                      @click:append-outer="sendComment()"
+                  >
+                  </v-text-field>
+                </v-card-text>
+                <div
+                    v-for="comment in comments.slice().reverse()"
+                >
+                  <v-card
+                      class="mx-auto"
+                      width="500px"
+                      align="start">
+                    <v-card-title>
+                      <div v-if="comment.employeeDto.surname != null">
+                        {{ comment.employeeDto.name + " " + comment.employeeDto.surname }}
+                      </div>
+                      <div v-else>
+                        {{ comment.employeeDto.name }}
+                      </div>
+                      <v-spacer></v-spacer>
+
+                      <v-icon
+                          v-if="profile && profile.role === 'ADMIN'"
+                          small
+                          v-bind="attrs"
+                          v-on="on"
+                          v-on:click="dropTheComment(comment)"
+                      >
+                        fas fa-trash-alt
+                      </v-icon>
+
+                    </v-card-title>
+                    <v-card-subtitle>{{ comment.creationDate }}
+                    </v-card-subtitle>
+                    <v-card-text>
+                      <span class="text--primary">{{ comment.commentText }}</span>
+                    </v-card-text>
+                    <v-divider></v-divider>
+                  </v-card>
+                </div>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="dialog = false"
+                  >
+                    Close
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
           </v-card-actions>
           <div class="card-footer text-muted message-footer_flex-block__parent">
             <div class="message-footer_flex-block"
@@ -86,7 +166,7 @@
         v-model="snackbar"
         :timeout="timeout"
     >
-      Post deleted
+      {{snackbarMessage}}
       <template v-slot:action="{ attrs }">
         <v-btn
             color="blue"
@@ -107,20 +187,122 @@ import axios from "axios";
 
 export default {
   components: {Pager},
-  props: ['messages',   'profile', 'pageInfo'],
+  props: ['messages', 'profile', 'pageInfo'],
   data() {
     return {
+      userComment: "",
+      comments: [],
+      dialog: false,
       snackbar: false,
+      snackbarMessage: "",
       timeout: 2000,
       message: this.message,
+      comment: this.comment,
+      currentPost: 0,
+      currentPostTitle: ""
     }
   },
   computed: {
+    currentUser() {
+      return this.$store.getters.getProfile;
+    },
     sortedMessages() {
       return this.messages.sort((a, b) => -(a.id - b.id))
-    }
+    },
   },
   methods: {
+    dropTheComment(item) {
+      fetch(`${location.origin}/comments/${item.id}`, {
+        method: 'delete'
+      })
+          .then(res => {
+            if (res.apierror) {
+              this.$toasted.error(` ${res.apierror.message}: ${res.apierror.status}!`, {
+                theme: "bubble",
+                position: "top-center",
+                duration: 3000,
+                icon: "error_outline"
+              });
+            } else {
+              const index = this.comments.indexOf(item);
+              if (index > -1) {
+                this.comments.splice(index, 1);
+                this.$store.commit('setComments', this.comments);
+              }
+              this.snackbarMessage = 'Comment deleted'
+              this.snackbar = true
+              this.timeout = 2000
+            }
+          })
+          .catch(err => {
+            debugger;
+            console.log(err);
+          });
+    },
+    sendComment() {
+      const requestBody = {
+        commentText: this.userComment,
+      }
+
+      let today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+
+      today = yyyy + '-' + mm + '-' + dd;
+
+      const currentPost = this.currentPost;
+
+      return axios({
+        method: 'post',
+        url: `${location.origin}/comments/${currentPost}`,
+        data: requestBody
+      })
+          .then(res => {
+            if (res.apierror) {
+              this.$toasted.error(` ${res.apierror.message}: ${res.apierror.status}!`, {
+                theme: "bubble",
+                position: "top-center",
+                duration: 3000,
+                icon: "error_outline"
+              });
+            } else {
+
+              const response = {
+                id: this.comments.length + 1,
+                commentText: this.userComment,
+                creationDate: today,
+                employeeDto: {
+                  name: this.profile.name,
+                  surname: this.profile.surname
+                }
+              }
+              this.comments.push(response)
+              this.$store.commit('setComments', this.comments)
+              this.userComment = ""
+            }
+          })
+          .catch(err => {
+            debugger;
+            console.log(err);
+          });
+
+    },
+    getCommentsByPost(message) {
+      this.currentPost = message.id
+      this.currentPostTitle = message.title
+      return axios
+          .get(`${location.origin}/comments/${message.id}`)
+          .then(response => {
+            const comments = response.data;
+            this.$store.commit('setComments', comments);
+            this.comments = comments;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      debugger;
+    },
     getFilteredMessages(tag) {
       axios
           .get(`${location.origin}/posts/search/${tag}`)
@@ -149,6 +331,7 @@ export default {
                 this.messages.splice(index, 1);
                 this.$store.commit('setMessages', this.messages);
               }
+              this.snackbarMessage = 'Post deleted'
               this.snackbar = true
               this.timeout = 2000
             }

@@ -51,7 +51,7 @@
               ref="messageTag"
               v-model="editingMessage && editingMessage.tag"
               type="tag"
-              name="corp-tag"
+
           ></v-text-field>
           <input type="hidden" name="id" :value="editingMessage && editingMessage.id" ref="messageId"/>
         </v-container>
@@ -62,16 +62,16 @@
             color="blue darken-1"
             text
             @click="dialog = false"
+            v-on:click="postMessage"
         >
-          Close
+          Save
         </v-btn>
         <v-btn
             color="blue darken-1"
             text
             @click="dialog = false"
-            v-on:click="postMessage"
         >
-          Save
+          Close
         </v-btn>
       </v-card-actions>
     </v-card>

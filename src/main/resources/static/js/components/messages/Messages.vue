@@ -11,7 +11,7 @@
             label="Enter the required tag"
             solo
             dense
-            name="user-tag"
+            name="input-tag"
         ></v-text-field>
       </v-col>
       <v-btn
@@ -48,6 +48,7 @@
         <span>All posts</span>
       </v-tooltip>
     </v-row>
+    <v-divider></v-divider>
     <div>
       <message-edit :profile="profile" :messages="messages"></message-edit>
       <message-list :pageInfo="pageInfo" :messages="messages" :profile="profile"></message-list>

@@ -1,46 +1,144 @@
 <template>
-  <div>
-    <p>dfrfg4fe</p>
-    <v-simple-table>
-      <template v-slot:default>
-        <thead>
-        <tr>
-          <th class="text-left">Name</th>
-          <th class="text-left">Email</th>
-          <th class="text-left">Last Visit</th>
-          <th class="text-left">Admin</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="user in users" :key="user.name" class="table-item__cursor-pointer">
-          <td>{{ user.name }}</td>
-          <td>{{ user.surname }}</td>
-          <td>{{ item.role === "ADMIN" ? '+' : '-' }}</td>
-        </tr>
-        </tbody>
+  <v-card>
+    <v-card-title>
+      Employees
+      <v-spacer></v-spacer>
+      <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table
+        hide-default-footer
+        :headers="headers"
+        :items="users"
+        :search="search"
+        sort-by="surname"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+                v-bind="attrs"
+                v-on="on"
+                small
+                class="mr-2"
+                @click="setCreatorRole(item)"
+            >
+              mdi-crown
+            </v-icon>
+          </template>
+          <span>Set creator role</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+                v-bind="attrs"
+                v-on="on"
+                small
+                @click="dropEmployee(item)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>Delete user</span>
+        </v-tooltip>
       </template>
-    </v-simple-table>
-  </div>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
-  props: ['users'],
+  props: ['users', 'profile', 'pageInfo'],
   data() {
     return {
       user: this.user,
+      search: '',
+      headers: [
+        {text: 'Surname', value: 'surname'},
+        {text: 'Name', value: 'name'},
+        {text: 'Email', value: 'login'},
+        {text: 'Role', value: 'role'},
+        {text: 'Actions', value: 'actions', sortable: false},
+      ],
     }
   },
-
-  beforeRouteEnter(to, from, next) {
-    return axios
-        .get(`${location.origin}/user/`)
-        .then(response => {
-          next(vm => vm.setEntity(response.data));
-        });
+  methods: {
+    dropEmployee(item) {
+      fetch(`${location.origin}/employees/${item.id}`, {
+        method: 'delete'
+      })
+          .then(res => {
+            if (res.apierror) {
+              this.$toasted.error(` ${res.apierror.user}: ${res.apierror.status}!`, {
+                theme: "bubble",
+                position: "top-center",
+                duration: 3000,
+                icon: "error_outline"
+              });
+            } else {
+              const index = this.users.indexOf(item);
+              if (index > -1) {
+                this.users.splice(index, 1);
+                this.$store.commit('setUsers', this.users);
+              }
+              this.snackbar = true
+              this.timeout = 2000
+            }
+          })
+          .catch(err => {
+            debugger;
+            console.log(err);
+          });
+    },
+    getAllEmployees() {
+      return axios
+          .get(`${location.origin}/employees`)
+          .then(response => {
+            const users = response.data;
+            this.$store.commit('setUsers', users);
+            this.users = users;
+          });
+    },
+    setCreatorRole(item) {
+      fetch(`${location.origin}/employees/setCreator/${item.id}`, {
+        method: 'put'
+      })
+          .then(res => {
+            if (res.apierror) {
+              this.$toasted.error(` ${res.apierror.user}: ${res.apierror.status}!`, {
+                theme: "bubble",
+                position: "top-center",
+                duration: 3000,
+                icon: "error_outline"
+              });
+            } else {
+              const index = this.users.indexOf(item);
+              const updated = this.users[index];
+              updated.role = 'CREATOR'
+              if (index > -1) {
+                this.users.splice(index, 1, updated);
+                this.$store.commit('setUsers', this.users);
+              }
+              this.snackbar = true
+              this.timeout = 2000
+            }
+          })
+          .catch(err => {
+            debugger;
+            console.log(err);
+          });
+    },
   },
+  beforeMount() {
+    this.getAllEmployees()
+  }
 }
 </script>
 

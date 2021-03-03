@@ -31,6 +31,7 @@ task copyTestResources(type: Copy) {
 processTestResources.dependsOn copyTestResources
 
 dependencies {
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mapstruct:mapstruct:1.4.1.Final'

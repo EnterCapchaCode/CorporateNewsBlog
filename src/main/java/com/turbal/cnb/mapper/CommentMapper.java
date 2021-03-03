@@ -25,8 +25,8 @@ public interface CommentMapper {
     @Mapping(target = "commentText", source = "commentDto.commentText")
     @Mapping(target = "employee", source = "commentDto.employeeDto")
     @Mapping(target = "post", source = "commentDto.postDto")
-    @Mapping(target = "version", ignore = true)
     @Mapping(target = "created", ignore = true)
+    @Mapping(target = "version", ignore = true)
     @Mapping(target = "modified", ignore = true)
     Comment toEntity(CommentDto commentDto);
 }

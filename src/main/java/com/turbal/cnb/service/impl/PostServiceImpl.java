@@ -6,11 +6,7 @@
 package com.turbal.cnb.service.impl;
 
 import com.turbal.cnb.dto.PostDto;
-import com.turbal.cnb.entity.Dislike;
-import com.turbal.cnb.entity.Employee;
-import com.turbal.cnb.entity.Like;
-import com.turbal.cnb.entity.Post;
-import com.turbal.cnb.entity.Tag;
+import com.turbal.cnb.entity.*;
 import com.turbal.cnb.mapper.PostMapper;
 import com.turbal.cnb.repository.DislikeRepo;
 import com.turbal.cnb.repository.LikeRepo;
@@ -19,7 +15,6 @@ import com.turbal.cnb.repository.TagRepo;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

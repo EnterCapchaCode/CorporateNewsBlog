@@ -86,7 +86,6 @@
                         this.$store.commit('setPageInfo', response.data.page);
                     })
                     .catch(err => {
-                        debugger
                         console.log(err);
                     });
             },

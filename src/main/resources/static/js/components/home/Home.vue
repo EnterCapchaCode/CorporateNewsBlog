@@ -2,9 +2,9 @@
     <div v-if="!getProfile">
         <div class="login-block">
             <div>
-                <h3>Hi!</h3>
-                <p>Test App is an application to support software testing according to the STLC methodology.</p>
-                <p>To continue using Test App please authorize with your Google account.</p>
+                <h3>Привет!</h3>
+                <p>Softeq News Blog - это веб-приложение, в котором публикуются и обсуждаются важные корпоративные новости</p>
+                <p>Чтобы начать пользоваться приложением войдите с помощью своего корпоративного Google-аккаунта</p>
             </div>
             <div class="login-background">
                 <img src="/static/assets/login.png" alt="login image">

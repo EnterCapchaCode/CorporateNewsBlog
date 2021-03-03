@@ -11,6 +11,7 @@ import projectsStore from "./store/projectsStore.js";
 import createEditEntityStore from "./store/createEditEntityStore.js";
 import checkListOrderStore from "./store/checkListOrderStore.js";
 import usersStore from "./store/usersStore";
+import commentsStore from "./store/commentsStore";
 
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
@@ -77,7 +78,8 @@ const store = new Vuex.Store({
         projects: projectsStore,
         createEditEntity: createEditEntityStore,
         checkListOrder: checkListOrderStore,
-        usersStore: usersStore
+        usersStore: usersStore,
+        commentsStore: commentsStore
     }
 });
 

@@ -8,6 +8,7 @@ package com.turbal.cnb.controller;
 import com.turbal.cnb.dto.CommentDto;
 import com.turbal.cnb.service.CommentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping(value = "/{employee_id}")
-    public CommentDto saveComment(@PathVariable Integer employee_id, @RequestBody CommentDto commentDto) {
-        return commentService.saveComment(commentDto, employee_id);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "{post_id}")
+    public CommentDto saveComment(@PathVariable Integer post_id, @RequestBody CommentDto commentDto) {
+        return commentService.saveComment(commentDto, post_id);
     }
 
     @GetMapping("{id}")

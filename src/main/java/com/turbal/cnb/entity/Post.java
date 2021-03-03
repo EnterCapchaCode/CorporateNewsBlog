@@ -63,5 +63,5 @@ public class Post extends AuditableEntity<Integer> {
     private Tag tag;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 }

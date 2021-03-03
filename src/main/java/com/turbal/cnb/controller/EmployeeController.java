@@ -9,11 +9,7 @@ import com.turbal.cnb.dto.EmployeeDto;
 import com.turbal.cnb.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +34,11 @@ public class EmployeeController {
     @GetMapping("{request}")
     private List<EmployeeDto> findEmployeeByRequest(@PathVariable String request) {
         return employeeService.findEmployeeByRequest(request);
+    }
+
+    @PutMapping("/setCreator/{id}")
+    private ResponseEntity<Void> setToEmployeeCreatorRole(@PathVariable Integer id) {
+        employeeService.setCreatorRole(id);
+        return ResponseEntity.ok().build();
     }
 }
