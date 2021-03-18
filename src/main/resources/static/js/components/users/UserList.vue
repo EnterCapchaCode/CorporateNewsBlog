@@ -1,17 +1,18 @@
 <template>
   <v-card>
     <v-card-title>
-      Employees
+      Сотрудники
       <v-spacer></v-spacer>
       <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
+          label="Поиск..."
           single-line
           hide-details
       ></v-text-field>
     </v-card-title>
     <v-data-table
+        :items-per-page="users.length"
         hide-default-footer
         :headers="headers"
         :items="users"
@@ -22,6 +23,15 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
+                v-if="item.role !== 'READER'"
+                small
+                class="mr-2"
+                disabled
+            >
+              mdi-crown
+            </v-icon>
+            <v-icon
+                v-else
                 v-bind="attrs"
                 v-on="on"
                 small
@@ -31,7 +41,7 @@
               mdi-crown
             </v-icon>
           </template>
-          <span>Set creator role</span>
+          <span>Повысить роль до CREATOR</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -44,7 +54,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>Delete user</span>
+          <span>Удалить пользователя</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -61,11 +71,11 @@ export default {
       user: this.user,
       search: '',
       headers: [
-        {text: 'Surname', value: 'surname'},
-        {text: 'Name', value: 'name'},
-        {text: 'Email', value: 'login'},
-        {text: 'Role', value: 'role'},
-        {text: 'Actions', value: 'actions', sortable: false},
+        {text: 'Фамилия', value: 'surname'},
+        {text: 'Имя', value: 'name'},
+        {text: 'Почта', value: 'login'},
+        {text: 'Роль', value: 'role'},
+        {text: 'Действия', value: 'actions', sortable: false},
       ],
     }
   },

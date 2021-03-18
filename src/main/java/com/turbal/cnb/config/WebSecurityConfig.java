@@ -23,7 +23,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-        "/", "/login", "/js/**", "/static/**", "/error**"
+            "/", "/login", "/js/**", "/static/**", "/error**"
     };
 
     @Bean
@@ -49,20 +49,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-            .withUser("test")
-            .password("secretPassword")
-            .roles("USER");
+                .withUser("test")
+                .password("secretPassword")
+                .roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .antMatcher("/**")
-            .authorizeRequests()
-            .antMatchers(AUTH_WHITELIST).permitAll()
-            .anyRequest().authenticated()
-            .and().logout().logoutSuccessUrl("/").permitAll()
-            .and()
-            .csrf().disable();
+                .antMatcher("/**")
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .anyRequest().authenticated()
+                .and().logout().logoutSuccessUrl("/").permitAll()
+                .and()
+                .csrf().disable();
     }
 }

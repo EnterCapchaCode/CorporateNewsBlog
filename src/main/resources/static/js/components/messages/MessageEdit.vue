@@ -11,19 +11,19 @@
                v-on="on"
                text
         >
-          New post
+          Новый пост
         </v-btn>
       </div>
     </template>
 
     <v-card>
       <v-card-title>
-        <span class="headline">Post creating</span>
+        <span class="headline">Создание поста</span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-text-field
-              label="Title"
+              label="Заголовок"
               outlined
               dense
               ref="messageTitle"
@@ -40,12 +40,12 @@
           >
             <template v-slot:label>
               <div>
-                Your text
+                Текст
               </div>
             </template>
           </v-textarea>
           <v-text-field
-              label="Tag"
+              label="Тег"
               outlined
               dense
               ref="messageTag"
@@ -64,14 +64,14 @@
             @click="dialog = false"
             v-on:click="postMessage"
         >
-          Save
+          Сохранить
         </v-btn>
         <v-btn
             color="blue darken-1"
             text
             @click="dialog = false"
         >
-          Close
+          Закрыть
         </v-btn>
       </v-card-actions>
     </v-card>

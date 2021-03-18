@@ -64,11 +64,6 @@ public class PostController {
         return postService.findPostsByTag(tag);
     }
 
-//    @GetMapping("search/{title}")
-//    public List<PostDto> findPostByTitle(@PathVariable String title) {
-//        return postService.findPostByTitleIsContaining(title);
-//    }
-
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);

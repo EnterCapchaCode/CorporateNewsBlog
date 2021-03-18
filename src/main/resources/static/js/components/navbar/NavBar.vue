@@ -9,10 +9,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link v-if="profile && profile.role === 'ADMIN'" class="nav-link" to="/">Home</router-link>
+          <router-link v-if="profile && profile.role === 'ADMIN'" class="nav-link" to="/">Главная</router-link>
         </li>
         <li v-if="profile && profile.role === 'ADMIN'" class="nav-item">
-          <router-link class="nav-link" :to="`/users/${profile.id}`">User List</router-link>
+          <router-link class="nav-link" :to="`/users/${profile.id}`">Список пользователей</router-link>
         </li>
       </ul>
       <div v-if="profile" class="navbar-text mr-3">{{ profile.name }}</div>
@@ -23,7 +23,7 @@
               <i class="fas fa-toggle-off"></i>
             </a>
           </template>
-          <span>Logout</span>
+          <span>Выход</span>
         </v-tooltip>
 
       </div>
@@ -34,7 +34,7 @@
               <i class="fas fa-toggle-on"></i>
             </a>
           </template>
-          <span>Login</span>
+          <span>Вход</span>
         </v-tooltip>
       </div>
     </div>

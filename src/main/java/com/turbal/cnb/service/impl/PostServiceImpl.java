@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -49,7 +50,7 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     private void setTagToNewPost(PostDto postDto, Post post) {
-        var tagName = postDto.getTag().getTagName();
+        var tagName = postDto.getTag().getTagName().toLowerCase(Locale.ROOT);
         Tag persistedTag = tagRepo.findByTagName(tagName);
 
         if (persistedTag != null) {
@@ -80,12 +81,12 @@ public class PostServiceImpl extends BaseService implements PostService {
 
     @Override
     public List<PostDto> findPostsByTag(String tag) throws Exception {
-        Tag entityTag = tagRepo.findByTagName(tag);
+        Tag entityTag = tagRepo.findByTagName(tag.toLowerCase(Locale.ROOT));
         if (entityTag == null) {
             throw new Exception("Tag not found");
         }
         log.info("Got a list of posts with tag = {}", tag);
-        return postRepo.findPostsByTag(entityTag)
+        return postRepo.findByTag(entityTag)
                 .stream()
                 .map(postMapper::toDto)
                 .collect(Collectors.toList());

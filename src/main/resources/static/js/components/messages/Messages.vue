@@ -8,7 +8,7 @@
       >
         <v-text-field
             v-model="filter"
-            label="Enter the required tag"
+            label="Введите тег"
             solo
             dense
             name="input-tag"
@@ -22,9 +22,9 @@
           color="#2196f3"
           @click="loader = 'loading2'"
       >
-        Search
+        Поиск
         <template v-slot:loader>
-          <span>Loaded</span>
+          <span>Готово</span>
         </template>
       </v-btn>
 
@@ -45,7 +45,7 @@
             </v-icon>
           </v-btn>
         </template>
-        <span>All posts</span>
+        <span>Все посты</span>
       </v-tooltip>
     </v-row>
     <v-divider></v-divider>

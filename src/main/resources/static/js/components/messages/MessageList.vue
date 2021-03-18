@@ -20,7 +20,7 @@
                     #{{ message.tag.tagName }}
                   </v-btn>
                 </template>
-                <span>Search</span>
+                <span>Искать</span>
               </v-tooltip>
             </v-list-item-subtitle>
           </v-card-title>
@@ -42,14 +42,14 @@
                     color="#2196f3"
                     @click="getCommentsByPost(message)"
                 >
-                  Comments
+                  Комментарии
                 </v-btn>
               </template>
               <v-card align="center">
                 <v-card-title class="blue white--text" align="start">
                   <span>{{ currentPostTitle }}</span>
                   <v-list-item-subtitle disabled="true" align="start">
-                    <span>Created: {{ message.creationDate }}</span>
+                    <span>Создан: {{ message.creationDate }}</span>
                   </v-list-item-subtitle>
                 </v-card-title>
                 <v-card-text class="my-2 pb-0 pt-5">
@@ -108,7 +108,7 @@
                       text
                       @click="dialog = false"
                   >
-                    Close
+                    Закрыть
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -120,25 +120,25 @@
                  v-bind:class="{ directColumn: message.author.id !== profile.id }">
               <span>
                 <div v-if="message.author.surname != null">
-                  {{ "Author: " + message.author.name + " " + message.author.surname }}
+                  {{ "Автор: " + message.author.name + " " + message.author.surname }}
                 </div>
                 <div v-else>
-                  {{ "Author: " + message.author.name }}
+                  {{ "Автор: " + message.author.name }}
                 </div>
               </span>
-              <span>Created: {{ message.creationDate }}</span>
+              <span>Создан: {{ message.creationDate }}</span>
             </div>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon
-                    v-bind="attrs"
-                    v-on="on"
-                    class="fas fa-pencil-alt"
-                    small
-                ></v-icon>
-              </template>
-              <span>Edit this post?</span>
-            </v-tooltip>
+<!--            <v-tooltip bottom>-->
+<!--              <template v-slot:activator="{ on, attrs }">-->
+<!--                <v-icon-->
+<!--                    v-bind="attrs"-->
+<!--                    v-on="on"-->
+<!--                    class="fas fa-pencil-alt"-->
+<!--                    small-->
+<!--                ></v-icon>-->
+<!--              </template>-->
+<!--              <span>Редактировать</span>-->
+<!--            </v-tooltip>-->
             <div v-if="profile.role === 'ADMIN'"
                  v-on:click="dropTheMessage(message)"
                  @click="snackbar = true"
@@ -153,13 +153,13 @@
                     fas fa-trash-alt
                   </v-icon>
                 </template>
-                <span>Delete this post?</span>
+                <span>Удалить</span>
               </v-tooltip>
             </div>
           </div>
         </div>
       </div>
-      <p v-else>No messages found</p>
+      <v-card-text v-else align="center" class="pt-16"><h5>Посты не найдены</h5></v-card-text>
     </div>
     <pager v-if="pageInfo && pageInfo.totalPages > 1"></pager>
     <v-snackbar
@@ -229,7 +229,7 @@ export default {
                 this.comments.splice(index, 1);
                 this.$store.commit('setComments', this.comments);
               }
-              this.snackbarMessage = 'Comment deleted'
+              this.snackbarMessage = 'Комментарий удален'
               this.snackbar = true
               this.timeout = 2000
             }
@@ -301,7 +301,6 @@ export default {
           .catch(err => {
             console.log(err);
           });
-      debugger;
     },
     getFilteredMessages(tag) {
       axios
@@ -331,7 +330,7 @@ export default {
                 this.messages.splice(index, 1);
                 this.$store.commit('setMessages', this.messages);
               }
-              this.snackbarMessage = 'Post deleted'
+              this.snackbarMessage = 'Пост удален'
               this.snackbar = true
               this.timeout = 2000
             }

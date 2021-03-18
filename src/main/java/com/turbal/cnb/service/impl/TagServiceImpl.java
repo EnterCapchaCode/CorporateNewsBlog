@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,9 +36,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagDto addTag(TagDto tagDto) {
-        log.info("Tag with name = {} saved", tagDto.getTagName());
         var tag = tagMapper.toEntity(tagDto);
         tagRepo.save(tag);
+        log.info("Tag with name = {} saved", tagDto.getTagName());
         return tagDto;
     }
 

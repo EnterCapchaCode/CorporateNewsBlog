@@ -21,7 +21,7 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
     Post findPostById(Integer id);
 
-    List<Post> findPostsByTag(Tag tag);
+    List<Post> findByTag(Tag tag);
 
     List<Post> findPostByTitleIsContaining(String title);
 }
