@@ -27,19 +27,17 @@
       <message-edit v-if="channel.currentUser" class="mt-3"></message-edit>
       <message-list :messages="channel.messages" :profile="profile"></message-list>
     </div>
-    <subscrib-modal v-show="isModalVisible" @close="closeModal"></subscrib-modal>
   </div>
 </template>
 
 <script>
   import MessageEdit from './MessageEdit.vue'
   import MessageList from './MessageList.vue'
-  import SubscribModal from './../subscrib/Subscrib.vue'
   import axios from 'axios'
   
   export default {
     components: {
-      MessageEdit, MessageList, SubscribModal
+      MessageEdit, MessageList
     },
     data() {
       return {

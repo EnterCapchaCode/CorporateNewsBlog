@@ -11,7 +11,7 @@
             label="Введите тег"
             solo
             dense
-            name="input-tag"
+            name="input-tagg"
         ></v-text-field>
       </v-col>
       <v-btn

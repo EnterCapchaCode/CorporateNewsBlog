@@ -5,7 +5,7 @@
       <div v-if="sortedMessages && sortedMessages.length">
         <div class="card my-3" v-for="message in sortedMessages">
           <v-card-title class="blue white--text">
-            <span class="headline">{{ message.title }}</span>
+              <span style="word-break: break-word" class="headline">{{ message.title }}</span>
             <v-list-item-subtitle>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -56,11 +56,12 @@
                   <v-text-field
                       ref="commentText"
                       v-model="userComment"
-                      label="Tap your comment"
+                      label="Введите текст"
                       solo
                       dense
 
                       :append-outer-icon="'mdi-send'"
+                      v-on:keyup.enter = "sendComment"
                       @click:append-outer="sendComment()"
                   >
                   </v-text-field>
@@ -84,8 +85,6 @@
                       <v-icon
                           v-if="profile && profile.role === 'ADMIN'"
                           small
-                          v-bind="attrs"
-                          v-on="on"
                           v-on:click="dropTheComment(comment)"
                       >
                         fas fa-trash-alt
@@ -128,17 +127,17 @@
               </span>
               <span>Создан: {{ message.creationDate }}</span>
             </div>
-<!--            <v-tooltip bottom>-->
-<!--              <template v-slot:activator="{ on, attrs }">-->
-<!--                <v-icon-->
-<!--                    v-bind="attrs"-->
-<!--                    v-on="on"-->
-<!--                    class="fas fa-pencil-alt"-->
-<!--                    small-->
-<!--                ></v-icon>-->
-<!--              </template>-->
-<!--              <span>Редактировать</span>-->
-<!--            </v-tooltip>-->
+            <!--            <v-tooltip bottom>-->
+            <!--              <template v-slot:activator="{ on, attrs }">-->
+            <!--                <v-icon-->
+            <!--                    v-bind="attrs"-->
+            <!--                    v-on="on"-->
+            <!--                    class="fas fa-pencil-alt"-->
+            <!--                    small-->
+            <!--                ></v-icon>-->
+            <!--              </template>-->
+            <!--              <span>Редактировать</span>-->
+            <!--            </v-tooltip>-->
             <div v-if="profile.role === 'ADMIN'"
                  v-on:click="dropTheMessage(message)"
                  @click="snackbar = true"
