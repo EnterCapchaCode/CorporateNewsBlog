@@ -6,6 +6,8 @@
 package com.turbal.cnb.controller;
 
 import com.turbal.cnb.dto.PostDto;
+import com.turbal.cnb.entity.Employee;
+import com.turbal.cnb.mapper.EmployeeMapper;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,10 +34,11 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final EmployeeMapper employeeMapper;
 
-    @PostMapping
-    public PostDto savePost(@RequestBody PostDto postDto) {
-        return postService.savePost(postDto);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public PostDto savePost(@AuthenticationPrincipal Employee currentUser, @RequestBody PostDto postDto) {
+        return postService.savePost(postDto, currentUser);
     }
 
     @PostMapping("/like/{id}")
@@ -48,21 +53,15 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{pageable}")
-    public Page<PostDto> findAllPosts(@PathVariable
-                                      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        var posts = postService.findAll(pageable);
-        return new PageImpl<>(posts);
+    @GetMapping()
+    public List<PostDto> findAllPosts() {
+        var posts = postService.findAll();
+        return posts;
     }
 
-    @GetMapping("{tag}")
-    public List<PostDto> findPostByTag(@PathVariable String tag) {
+    @GetMapping("search/{tag}")
+    public List<PostDto> findPostByTag(@PathVariable String tag) throws Exception {
         return postService.findPostsByTag(tag);
-    }
-
-    @GetMapping("search/{title}")
-    public List<PostDto> findPostByTitle(@PathVariable String title) {
-        return postService.findPostByTitleIsContaining(title);
     }
 
     @DeleteMapping("{id}")

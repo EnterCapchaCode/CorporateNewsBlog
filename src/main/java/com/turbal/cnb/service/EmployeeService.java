@@ -15,6 +15,8 @@ public interface EmployeeService {
 
     EmployeeDto saveEmployee(EmployeeDto employeeDto) throws ValidationException;
 
+    void setCreatorRole(Integer id);
+
     void deleteEmployee(Integer id);
 
     List<EmployeeDto> findAll();

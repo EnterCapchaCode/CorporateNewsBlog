@@ -25,7 +25,8 @@ create table post(
     modification_date date,
     negative_rating bigint,
     positive_rating bigint,
-    employee_id int not null
+    employee_id int not null,
+    tag_id int
 );
 
 create table comment(
@@ -40,17 +41,10 @@ create table tag(
     name character varying(20)
 );
 
-create table post_tag(
-    post_id int not null,
-    tag_id int not null
-);
-
 alter table employee add constraint employee_role_fk foreign key (role_id) references role (id);
 
 alter table post add constraint  post_employee_fk foreign key (employee_id) references employee (id);
+alter table post add constraint  post_tag_fk foreign key (tag_id) references tag (id);
 
 alter table comment add constraint comment_employee_fk foreign key (employee_id) references employee (id);
 alter table comment add constraint comment_post_fk foreign key (post_id) references post (id);
-
-alter table post_tag add constraint post_tag_post_fk foreign key (post_id) references post (id);
-alter table post_tag add constraint post_tag_tag_fk foreign key (tag_id) references tag (id);

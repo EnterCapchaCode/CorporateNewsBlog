@@ -15,10 +15,6 @@ alter table post add column version bigint default 0;
 alter table post add column created timestamp not null default now();
 alter table post add column modified timestamp;
 
-alter table post_tag add column version bigint default 0;
-alter table post_tag add column created timestamp not null default now();
-alter table post_tag add column modified timestamp;
-
 alter table role add column version bigint default 0;
 alter table role add column created timestamp not null default now();
 alter table role add column modified timestamp;

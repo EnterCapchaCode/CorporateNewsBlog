@@ -14,11 +14,11 @@ public class PostDto {
 
     private Integer id;
     private String title;
-    private String description;
     private String text;
     private LocalDate creationDate;
     private LocalDate modificationDate;
     private Integer negativeRating;
     private Integer positiveRating;
-    private EmployeeDto employeeDto;
+    private EmployeeDto author;
+    private TagDto tag;
 }

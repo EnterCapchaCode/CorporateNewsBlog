@@ -6,22 +6,20 @@
 package com.turbal.cnb.service.impl;
 
 import com.turbal.cnb.dto.PostDto;
-import com.turbal.cnb.entity.Dislike;
-import com.turbal.cnb.entity.Employee;
-import com.turbal.cnb.entity.Like;
-import com.turbal.cnb.entity.Post;
+import com.turbal.cnb.entity.*;
 import com.turbal.cnb.mapper.PostMapper;
 import com.turbal.cnb.repository.DislikeRepo;
 import com.turbal.cnb.repository.LikeRepo;
 import com.turbal.cnb.repository.PostRepo;
+import com.turbal.cnb.repository.TagRepo;
 import com.turbal.cnb.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,21 +31,35 @@ public class PostServiceImpl extends BaseService implements PostService {
     private final PostMapper postMapper;
     private final LikeRepo likeRepo;
     private final DislikeRepo dislikeRepo;
+    private final TagRepo tagRepo;
 
     @Override
-    public PostDto savePost(PostDto postDto) {
+    public PostDto savePost(PostDto postDto, Employee currentUser) {
         var post = postMapper.toEntity(postDto);
-        var employee = getCurrentEmployee();
-        //employee.getPosts().add(post);
 
-        post.setEmployee(employee);
+        post.setEmployee(currentUser);
         post.setCreationDate(LocalDate.now());
         post.setNegativeRating(0);
         post.setPositiveRating(0);
 
-        postRepo.save(post);
+        setTagToNewPost(postDto, post);
+
+        Post newPost = postRepo.save(post);
         log.info("Post with title = {} saved", postDto.getTitle());
-        return postDto;
+        return postMapper.toDto(newPost);
+    }
+
+    private void setTagToNewPost(PostDto postDto, Post post) {
+        var tagName = postDto.getTag().getTagName().toLowerCase(Locale.ROOT);
+        Tag persistedTag = tagRepo.findByTagName(tagName);
+
+        if (persistedTag != null) {
+            post.setTag(persistedTag);
+        } else {
+            Tag newTag = new Tag();
+            newTag.setTagName(tagName);
+            post.setTag(tagRepo.save(newTag));
+        }
     }
 
     @Override
@@ -68,12 +80,16 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findPostsByTag(String tag) {
+    public List<PostDto> findPostsByTag(String tag) throws Exception {
+        Tag entityTag = tagRepo.findByTagName(tag.toLowerCase(Locale.ROOT));
+        if (entityTag == null) {
+            throw new Exception("Tag not found");
+        }
         log.info("Got a list of posts with tag = {}", tag);
-        return postRepo.findPostsByTag(tag)
-            .stream()
-            .map(postMapper::toDto)
-            .collect(Collectors.toList());
+        return postRepo.findByTag(entityTag)
+                .stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -113,25 +129,25 @@ public class PostServiceImpl extends BaseService implements PostService {
     }
 
     @Override
-    public List<PostDto> findAll(Pageable pageable) {
+    public List<PostDto> findAll() {
         log.info("Got a list of all posts");
-        return postRepo.findAll(pageable)
-            .stream()
-            .map(postMapper::toDto)
-            .collect(Collectors.toList());
+        return postRepo.findAll()
+                .stream()
+                .map(postMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     private Like createLike(Post post, Employee employee) {
         return Like.builder()
-            .post(post)
-            .employee(employee)
-            .build();
+                .post(post)
+                .employee(employee)
+                .build();
     }
 
     private Dislike createDislike(Post post, Employee employee) {
         return Dislike.builder()
-            .post(post)
-            .employee(employee)
-            .build();
+                .post(post)
+                .employee(employee)
+                .build();
     }
 }

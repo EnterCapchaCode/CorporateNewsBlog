@@ -34,7 +34,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "posts")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Employee extends AuditableEntity<Integer> {
 
