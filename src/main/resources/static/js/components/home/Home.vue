@@ -2,9 +2,9 @@
   <div v-if="!getProfile">
     <div class="login-block">
       <div>
-        <h3>Привет!</h3>
-        <p class="greeting">Softeq News Blog - это веб-приложение, в котором публикуются и обсуждаются важные корпоративные новости</p>
-        <p class="greeting">Чтобы начать пользоваться приложением войдите с помощью своего корпоративного Google-аккаунта</p>
+        <h3>Hello</h3>
+        <p class="greeting">Softeq News Blog is a web application that publishes and discusses important corporate news</p>
+        <p class="greeting">To start using the application, please sign in with your corporate Google account</p>
       </div>
       <div class="login-background">
         <img src="/static/assets/login.png" alt="login image">

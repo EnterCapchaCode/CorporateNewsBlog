@@ -1,12 +1,12 @@
 <template>
   <v-card>
     <v-card-title>
-      Сотрудники
+      Employees
       <v-spacer></v-spacer>
       <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Поиск..."
+          label="Search..."
           single-line
           hide-details
       ></v-text-field>
@@ -41,7 +41,7 @@
               mdi-crown
             </v-icon>
           </template>
-          <span>Повысить роль до CREATOR</span>
+          <span>Set CREATOR role</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -54,7 +54,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>Удалить пользователя</span>
+          <span>Delete user</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -71,11 +71,11 @@ export default {
       user: this.user,
       search: '',
       headers: [
-        {text: 'Фамилия', value: 'surname'},
-        {text: 'Имя', value: 'name'},
-        {text: 'Почта', value: 'login'},
-        {text: 'Роль', value: 'role'},
-        {text: 'Действия', value: 'actions', sortable: false},
+        {text: 'Surname', value: 'surname'},
+        {text: 'Name', value: 'name'},
+        {text: 'Email', value: 'login'},
+        {text: 'Role', value: 'role'},
+        {text: 'Actions', value: 'actions', sortable: false},
       ],
     }
   },

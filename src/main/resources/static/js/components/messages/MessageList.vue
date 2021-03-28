@@ -20,7 +20,7 @@
                     #{{ message.tag.tagName }}
                   </v-btn>
                 </template>
-                <span>Искать</span>
+                <span>Search</span>
               </v-tooltip>
             </v-list-item-subtitle>
           </v-card-title>
@@ -42,21 +42,21 @@
                     color="#2196f3"
                     @click="getCommentsByPost(message)"
                 >
-                  Комментарии
+                  Comments
                 </v-btn>
               </template>
               <v-card align="center">
                 <v-card-title class="blue white--text" align="start">
                   <span>{{ currentPostTitle }}</span>
                   <v-list-item-subtitle disabled="true" align="start">
-                    <span>Создан: {{ message.creationDate }}</span>
+                    <span>Created: {{ message.creationDate }}</span>
                   </v-list-item-subtitle>
                 </v-card-title>
                 <v-card-text class="my-2 pb-0 pt-5">
                   <v-text-field
                       ref="commentText"
                       v-model="userComment"
-                      label="Введите текст"
+                      label="Enter text"
                       solo
                       dense
 
@@ -107,7 +107,7 @@
                       text
                       @click="dialog = false"
                   >
-                    Закрыть
+                    Close
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -119,13 +119,13 @@
                  v-bind:class="{ directColumn: message.author.id !== profile.id }">
               <span>
                 <div v-if="message.author.surname != null">
-                  {{ "Автор: " + message.author.name + " " + message.author.surname }}
+                  {{ "Author: " + message.author.name + " " + message.author.surname }}
                 </div>
                 <div v-else>
-                  {{ "Автор: " + message.author.name }}
+                  {{ "Author: " + message.author.name }}
                 </div>
               </span>
-              <span>Создан: {{ message.creationDate }}</span>
+              <span>Created: {{ message.creationDate }}</span>
             </div>
             <!--            <v-tooltip bottom>-->
             <!--              <template v-slot:activator="{ on, attrs }">-->
