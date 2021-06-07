@@ -39,11 +39,11 @@ docker-compose -f extras/docker/docker-compose.yaml up
 ```bash
 npm start
 ```
-5. To run BE execute CnbApplication.java class
+5. Build application required Java 14. Run `gradlew clean build` to clean and rebuild project. Run `gradlew bootRun` to start application. Application listen on port 8080
 
 ## Contact
 
-> Denis Turbal - dturball@gmail.com
-> Project Link: https://github.com/EnterCapchaCode/CorporateNewsBlog
+ Denis Turbal - dturball@gmail.com
+ Project Link: https://github.com/EnterCapchaCode/CorporateNewsBlog
 
 
