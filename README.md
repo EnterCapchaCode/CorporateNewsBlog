@@ -39,7 +39,7 @@ docker-compose -f extras/docker/docker-compose.yaml up
 ```bash
 npm start
 ```
-5. Build application required Java 14. Run `gradlew clean build` to clean and rebuild project. Run `gradlew bootRun` to start application. Application listen on port 8080
+5. Build application required Java 15. Run `gradlew clean build` to clean and rebuild project. Run `gradlew bootRun` to start application. Application listen on port 8080
 
 ## Contact
 
